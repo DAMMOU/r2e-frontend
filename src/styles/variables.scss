@@ -103,52 +103,5 @@ $transition-slow: 0.5s ease;
   background-clip: text;
 }
 
-// Styles globaux du composant
-.home-page {
-  font-family: $font-primary;
-  line-height: 1.6;
-  color: $gray-800;
-  overflow-x: hidden;
-}
 
-.container {
-  @include container;
-}
 
-.gradient-text {
-  @include gradient-text;
-}
-
-// Section headers
-.section-header {
-  text-align: center;
-  margin-bottom: 4rem;
-
-  @include mobile {
-    margin-bottom: 3rem;
-  }
-}
-
-.section-title {
-  font-size: 2.75rem;
-  font-weight: 800;
-  color: $gray-900;
-  margin-bottom: 1rem;
-  letter-spacing: -0.025em;
-
-  @include mobile {
-    font-size: 2.25rem;
-  }
-}
-
-.section-subtitle {
-  font-size: 1.25rem;
-  color: $gray-600;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
-
-  @include mobile {
-    font-size: 1.125rem;
-  }
-}

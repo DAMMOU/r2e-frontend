@@ -1,0 +1,9 @@
+
+$font-primary: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+$gray-800: #1f2937;
+main {
+  font-family: $font-primary;
+  line-height: 1.6;
+  color: $gray-800;
+  overflow-x: hidden;
+}
