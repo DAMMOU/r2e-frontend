@@ -1,0 +1,556 @@
+@use '../../../styles/variables.scss' as *;
+
+.register-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $extra-light-blue 0%, $white 50%, $gray-50 100%);
+  padding: 120px 0 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @include mobile {
+    padding: 100px 0 60px;
+  }
+}
+
+.register-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  width: 100%;
+  background: $white;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-2xl;
+  overflow: hidden;
+  margin: 0 2rem;
+  min-height: 800px;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    margin: 0 1rem;
+    min-height: auto;
+  }
+}
+
+.register-card {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include mobile {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+
+  .logo {
+    @include flex-center;
+    gap: 0.75rem;
+    text-decoration: none;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    &-icon {
+      @include flex-center;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, $primary-blue 0%, $primary-green 100%);
+      color: $white;
+      font-weight: 800;
+      border-radius: $border-radius-md;
+      font-size: 1.125rem;
+      box-shadow: $shadow-md;
+    }
+
+    &-text {
+      font-size: 1.375rem;
+      font-weight: 800;
+      color: $gray-900;
+      letter-spacing: -0.025em;
+    }
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: $gray-900;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.025em;
+
+    @include mobile {
+      font-size: 2rem;
+    }
+  }
+
+  p {
+    color: $gray-600;
+    font-size: 1.125rem;
+  }
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 600;
+    color: $gray-700;
+    font-size: 0.875rem;
+  }
+
+  .input-wrapper {
+    position: relative;
+
+    .input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: $gray-400;
+      transition: color $transition-normal;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 3rem;
+      border: 2px solid $gray-200;
+      border-radius: $border-radius-md;
+      font-size: 1rem;
+      transition: all $transition-normal;
+      background: $white;
+      font-family: $font-primary;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-blue;
+        box-shadow: 0 0 0 3px rgba($primary-blue, 0.1);
+
+        + .input-icon {
+          color: $primary-blue;
+        }
+      }
+
+      &::placeholder {
+        color: $gray-400;
+      }
+
+      &:hover {
+        border-color: $gray-300;
+      }
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+  }
+}
+
+.password-strength {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+
+  .strength-bar {
+    flex: 1;
+    height: 4px;
+    background: $gray-200;
+    border-radius: 2px;
+    overflow: hidden;
+
+    .strength-fill {
+      height: 100%;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+
+      &.weak {
+        width: 33%;
+        background: $error-red;
+      }
+
+      &.medium {
+        width: 66%;
+        background: $warning-orange;
+      }
+
+      &.strong {
+        width: 100%;
+        background: $success-green;
+      }
+    }
+  }
+
+  .strength-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 60px;
+
+    &.weak { color: $error-red; }
+    &.medium { color: $warning-orange; }
+    &.strong { color: $success-green; }
+  }
+}
+
+.form-options, .form-terms {
+  margin: 0.5rem 0;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: $gray-700;
+  line-height: 1.4;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid $gray-300;
+    border-radius: 4px;
+    position: relative;
+    transition: all $transition-normal;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 9px;
+      border: solid $white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: opacity $transition-normal;
+    }
+  }
+
+  input[type="checkbox"]:checked + .checkmark {
+    background: $primary-blue;
+    border-color: $primary-blue;
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+.form-terms {
+  .checkbox-wrapper {
+    align-items: flex-start;
+  }
+
+  .terms-link {
+    color: $primary-blue;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: $dark-blue;
+    }
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, $primary-blue 0%, $secondary-blue 100%);
+  color: $white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: $border-radius-md;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all $transition-normal;
+  box-shadow: $shadow-md;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba($white, 0.2), transparent);
+    transition: left $transition-normal;
+  }
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, $dark-blue 0%, $primary-blue 100%);
+    transform: translateY(-2px);
+    box-shadow: $shadow-xl;
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  .btn-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform $transition-normal;
+  }
+
+  &:hover:not(:disabled) .btn-icon {
+    transform: translateX(2px);
+  }
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 1.5rem 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: $gray-200;
+  }
+
+  span {
+    background: $white;
+    padding: 0 1rem;
+    color: $gray-500;
+    font-size: 0.875rem;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.btn-google, .btn-github {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  border: 2px solid $gray-200;
+  border-radius: $border-radius-md;
+  background: $white;
+  color: $gray-700;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all $transition-normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+
+  &:hover {
+    border-color: $gray-300;
+    background: $gray-50;
+    transform: translateY(-1px);
+    box-shadow: $shadow-sm;
+  }
+}
+
+.btn-google {
+  .google-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.btn-github {
+  .github-icon {
+    width: 20px;
+    height: 20px;
+    color: $gray-900;
+  }
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid $gray-200;
+
+  p {
+    color: $gray-600;
+    font-size: 0.95rem;
+  }
+
+  .login-link {
+    color: $primary-blue;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color $transition-normal;
+
+    &:hover {
+      color: $dark-blue;
+    }
+  }
+}
+
+.register-side {
+  background: linear-gradient(135deg, $primary-blue 0%, $primary-green 100%);
+  padding: 3rem;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  @include tablet {
+    display: none;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.1;
+  }
+}
+
+.side-content {
+  position: relative;
+  z-index: 2;
+  max-width: 400px;
+  width: 100%;
+}
+
+.benefits {
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  .benefit-content {
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      opacity: 0.9;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+  text-align: center;
+
+  .stat-item {
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.register-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.register-side {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.benefit-item {
+  animation: fadeInUp 0.6s ease-out both;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1 + 0.3}s;
+    }
+  }
+}
