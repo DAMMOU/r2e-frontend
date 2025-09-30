@@ -1,4 +1,5 @@
 // Variables
+@use "sass:color";
 $primary-blue: #2563eb;
 $primary-green: #10b981;
 $secondary-blue: #3b82f6;
@@ -185,6 +186,27 @@ $transition-normal: 0.3s ease;
 
       &:hover {
         background: $dark-blue;
+        color: $white;
+        transform: translateY(-1px);
+        box-shadow: $shadow-md;
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+    .btn-register {
+      background: $primary-green;
+      color: $white;
+      padding: 0.625rem 1.5rem;
+      border-radius: $border-radius;
+      font-weight: 600;
+      transition: all $transition-normal;
+      box-shadow: $shadow-sm;
+      cursor: pointer;
+
+      &:hover {
+        background: color.adjust($primary-green, $lightness: -10%);
         color: $white;
         transform: translateY(-1px);
         box-shadow: $shadow-md;
