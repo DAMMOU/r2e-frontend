@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; 
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -9,4 +9,9 @@ import { RouterModule } from '@angular/router';
 })
 export class HeaderComponent {
 
+
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
