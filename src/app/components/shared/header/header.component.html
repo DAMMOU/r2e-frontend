@@ -1,13 +1,14 @@
 <header class="header">
     <div class="container">
         <nav class="nav">
-            <div class="logo">
+            <a routerLink="/" class="logo" (click)="scrollToTop()">
                 <div class="logo-icon">R2E</div>
                 <span class="logo-text">Ready2Entreprise</span>
-            </div>
+            </a>
             <ul class="nav-links">
                 <li><a href="#features">Fonctionnalités</a></li>
                 <li><a href="#how-it-works">Comment ça marche</a></li>
+                <li><a routerLink="/faq">FAQ</a></li> 
                 <li><a routerLink="/contact">Contact</a></li>
                 <li><a routerLink="/login" class="btn-login">Se connecter</a></li>
                 <li><a routerLink="/register" class="btn-register">S'inscrire</a></li>

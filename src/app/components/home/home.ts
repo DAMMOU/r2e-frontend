@@ -5,7 +5,7 @@ import { HowItWorksComponent } from './how-it-works/how-it-works.component';
 import { HeroComponent } from './hero/hero.component';
 import { FeaturesComponent } from './features/features.component';
 import { CtaComponent } from './cta/cta.component';
-import { Login } from "../login/login";
+import { Login } from "./login/login";
 
 @Component({
   selector: 'app-home',

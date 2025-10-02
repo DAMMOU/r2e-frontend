@@ -1,0 +1,99 @@
+<div class="faq-page">
+  <!-- Header Section -->
+  <section class="faq-header">
+    <div class="container">
+      <div class="header-content">
+        <h1 class="header-title">Questions Fréquentes</h1>
+        <p class="header-subtitle">
+          Trouvez rapidement des réponses à vos questions les plus courantes
+        </p>
+        <div class="search-box">
+          <input type="text" placeholder="Rechercher une question..." class="search-input" [(ngModel)]="searchQuery"
+            (input)="filterFAQs()">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Content Section -->
+  <section class="faq-content">
+    <div class="container">
+      <div class="faq-grid">
+        <!-- FAQ Categories -->
+        <div class="faq-categories">
+          <h3>Catégories</h3>
+          <div class="category-list">
+            @for (category of categories; track category.id) {
+            <button class="category-btn" [class.active]="selectedCategory === category.id"
+              (click)="selectCategory(category.id)">
+              {{ category.name }}
+              <span class="count">{{ getCategoryCount(category.id) }}</span>
+            </button>
+            }
+          </div>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="faq-items">
+          <div class="faq-stats" *ngIf="filteredFAQs.length > 0">
+            <p>{{ filteredFAQs.length }} question{{ filteredFAQs.length > 1 ? 's' : '' }} trouvée{{ filteredFAQs.length
+              > 1 ? 's' : '' }}</p>
+          </div>
+
+          @if (filteredFAQs.length > 0) {
+          <div class="faq-list">
+            @for (faq of filteredFAQs; track faq.id) {
+            <div class="faq-item" [class.active]="faq.isOpen">
+              <div class="faq-question" (click)="toggleFAQ(faq.id)">
+                <h4>{{ faq.question }}</h4>
+                <svg class="chevron-icon" [class.rotated]="faq.isOpen" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              @if (faq.isOpen) {
+              <div class="faq-answer">
+                <p>{{ faq.answer }}</p>
+                @if (faq.category) {
+                <div class="faq-meta">
+                  <span class="category-tag">{{ getCategoryName(faq.category) }}</span>
+                </div>
+                }
+              </div>
+              }
+            </div>
+            }
+          </div>
+          } @else {
+          <div class="no-results">
+            <svg class="no-results-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h3>Aucun résultat trouvé</h3>
+            <p>Essayez de modifier vos termes de recherche ou parcourez les différentes catégories</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact CTA Section -->
+  <section class="contact-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Vous ne trouvez pas ce que vous cherchez ?</h2>
+        <p>Notre équipe de support est là pour vous aider</p>
+        <div class="cta-buttons">
+          <button routerLink="/contact" class="btn-primary">Contactez-nous</button>
+          <button class="btn-secondary">Ouvrir un ticket</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

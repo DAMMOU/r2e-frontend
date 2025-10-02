@@ -1,6 +1,6 @@
-@use '../../../styles/variables.scss' as *;
+@use '../../../../styles/variables.scss' as *;
 
-.login-page {
+.register-page {
   min-height: 100vh;
   background: linear-gradient(135deg, $extra-light-blue 0%, $white 50%, $gray-50 100%);
   padding: 120px 0 80px;
@@ -13,7 +13,7 @@
   }
 }
 
-.login-container {
+.register-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   max-width: 1200px;
@@ -23,7 +23,7 @@
   box-shadow: $shadow-2xl;
   overflow: hidden;
   margin: 0 2rem;
-  min-height: 700px;
+  min-height: 800px;
 
   @include tablet {
     grid-template-columns: 1fr;
@@ -32,7 +32,7 @@
   }
 }
 
-.login-card {
+.register-card {
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
   }
 }
 
-.login-header {
+.register-header {
   text-align: center;
   margin-bottom: 2.5rem;
 
@@ -92,10 +92,20 @@
   }
 }
 
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form-group {
@@ -123,7 +133,7 @@
       transition: color $transition-normal;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 0.875rem 1rem 0.875rem 3rem;
       border: 2px solid $gray-200;
@@ -131,6 +141,7 @@
       font-size: 1rem;
       transition: all $transition-normal;
       background: $white;
+      font-family: $font-primary;
 
       &:focus {
         outline: none;
@@ -150,27 +161,79 @@
         border-color: $gray-300;
       }
     }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
   }
 }
 
-.form-options {
-  @include flex-between;
-  margin: 0.5rem 0;
+.password-strength {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
 
-  @include mobile {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
+  .strength-bar {
+    flex: 1;
+    height: 4px;
+    background: $gray-200;
+    border-radius: 2px;
+    overflow: hidden;
+
+    .strength-fill {
+      height: 100%;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+
+      &.weak {
+        width: 33%;
+        background: $error-red;
+      }
+
+      &.medium {
+        width: 66%;
+        background: $warning-orange;
+      }
+
+      &.strong {
+        width: 100%;
+        background: $success-green;
+      }
+    }
   }
+
+  .strength-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 60px;
+
+    &.weak { color: $error-red; }
+    &.medium { color: $warning-orange; }
+    &.strong { color: $success-green; }
+  }
+}
+
+.form-options, .form-terms {
+  margin: 0.5rem 0;
 }
 
 .checkbox-wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   cursor: pointer;
   font-size: 0.875rem;
   color: $gray-700;
+  line-height: 1.4;
 
   input[type="checkbox"] {
     display: none;
@@ -183,6 +246,8 @@
     border-radius: 4px;
     position: relative;
     transition: all $transition-normal;
+    flex-shrink: 0;
+    margin-top: 0.125rem;
 
     &::after {
       content: '';
@@ -209,15 +274,19 @@
   }
 }
 
-.forgot-password {
-  color: $primary-blue;
-  text-decoration: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: color $transition-normal;
+.form-terms {
+  .checkbox-wrapper {
+    align-items: flex-start;
+  }
 
-  &:hover {
-    color: $dark-blue;
+  .terms-link {
+    color: $primary-blue;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: $dark-blue;
+    }
   }
 }
 
@@ -239,6 +308,12 @@
   position: relative;
   overflow: hidden;
 
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -250,7 +325,7 @@
     transition: left $transition-normal;
   }
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: linear-gradient(135deg, $dark-blue 0%, $primary-blue 100%);
     transform: translateY(-2px);
     box-shadow: $shadow-xl;
@@ -260,7 +335,7 @@
     }
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(0);
   }
 
@@ -274,7 +349,7 @@
     transition: transform $transition-normal;
   }
 
-  &:hover .btn-icon {
+  &:hover:not(:disabled) .btn-icon {
     transform: translateX(2px);
   }
 }
@@ -343,7 +418,7 @@
   }
 }
 
-.login-footer {
+.register-footer {
   text-align: center;
   margin-top: 2rem;
   padding-top: 2rem;
@@ -354,18 +429,19 @@
     font-size: 0.95rem;
   }
 
-  .signup-link {
+  .login-link {
     color: $primary-blue;
     text-decoration: none;
     font-weight: 600;
     transition: color $transition-normal;
 
     &:hover {
+      color: $dark-blue;
     }
   }
 }
 
-.login-side {
+.register-side {
   background: linear-gradient(135deg, $primary-blue 0%, $primary-green 100%);
   padding: 3rem;
   color: $white;
@@ -395,92 +471,57 @@
   position: relative;
   z-index: 2;
   max-width: 400px;
+  width: 100%;
 }
 
-.testimonial {
-  margin-bottom: 3rem;
-
-  .quote-icon {
-    font-size: 3rem;
-    line-height: 1;
-    margin-bottom: 1rem;
-    opacity: 0.8;
-  }
-
-  .testimonial-text {
-    font-size: 1.25rem;
-    line-height: 1.6;
+.benefits {
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
     margin-bottom: 2rem;
-    opacity: 0.95;
+    text-align: center;
   }
+}
 
-  .testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
 
-    .author-avatar {
-      width: 50px;
-      height: 50px;
-      background: rgba($white, 0.2);
-      border-radius: 50%;
-      @include flex-center;
-      font-weight: 700;
+  .benefit-content {
+    h3 {
       font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
     }
 
-    .author-info {
-      display: flex;
-      flex-direction: column;
-
-      strong {
-        font-size: 1.125rem;
-        margin-bottom: 0.25rem;
-      }
-
-      span {
-        opacity: 0.8;
-        font-size: 0.875rem;
-      }
+    p {
+      opacity: 0.9;
+      line-height: 1.5;
+      font-size: 0.95rem;
     }
   }
 }
 
-.features-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+  text-align: center;
 
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  font-size: 1rem;
-  opacity: 0.95;
+  .stat-item {
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
 
-  .feature-check {
-    width: 20px;
-    height: 20px;
-    color: rgba($white, 0.9);
-    flex-shrink: 0;
-  }
-}
-
-// Responsive adjustments
-@include mobile {
-  .login-container {
-    margin: 0 1rem;
-  }
-
-  .login-card {
-    padding: 2rem 1.5rem;
-  }
-
-  .form-options {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
+    .stat-label {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
   }
 }
 
@@ -496,10 +537,20 @@
   }
 }
 
-.login-card {
+.register-card {
   animation: fadeInUp 0.6s ease-out;
 }
 
-.login-side {
+.register-side {
   animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.benefit-item {
+  animation: fadeInUp 0.6s ease-out both;
+
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1 + 0.3}s;
+    }
+  }
 }
