@@ -1,17 +1,51 @@
 <header class="header">
     <div class="container">
         <nav class="nav">
-            <a routerLink="/" class="logo" (click)="scrollToTop()">
-                <div class="logo-icon">R2E</div>
-                <span class="logo-text">Ready2Entreprise</span>
-            </a>
+            @if (isAuthenticated) {
+                <a routerLink="/dashboard" class="logo" (click)="scrollToTop()">
+                    <div class="logo-icon">R2E</div>
+                    <span class="logo-text">Ready2Entreprise</span>
+                </a>
+            } @else {
+                <a routerLink="/" class="logo" (click)="scrollToTop()">
+                    <div class="logo-icon">R2E</div>
+                    <span class="logo-text">Ready2Entreprise</span>
+                </a>
+            }
             <ul class="nav-links">
                 <li><a href="#features">Fonctionnalités</a></li>
                 <li><a href="#how-it-works">Comment ça marche</a></li>
                 <li><a routerLink="/faq">FAQ</a></li> 
                 <li><a routerLink="/contact">Contact</a></li>
+                
+                <!-- Utilisateur NON connecté -->
+                @if (!isAuthenticated) {
                 <li><a routerLink="/login" class="btn-login">Se connecter</a></li>
                 <li><a routerLink="/register" class="btn-register">S'inscrire</a></li>
+                }
+                
+                <!-- Utilisateur connecté -->
+                @if (isAuthenticated) {
+                <li class="user-menu">
+                    <div class="user-info">
+                        <span class="user-name">{{ currentUser?.firstName }}</span>
+                        <div class="user-dropdown">
+                            <a routerLink="/dashboard" class="dropdown-item">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                </svg>
+                                Tableau de bord
+                            </a>
+                            <button (click)="logout()" class="dropdown-item logout-btn">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd" />
+                                </svg>
+                                Déconnexion
+                            </button>
+                        </div>
+                    </div>
+                </li>
+                }
             </ul>
             <div class="mobile-menu-btn">
                 <span></span>
