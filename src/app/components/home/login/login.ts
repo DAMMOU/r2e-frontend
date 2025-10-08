@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService, LoginRequest } from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +15,12 @@ export class Login implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
   showPassword = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -28,6 +31,13 @@ export class Login implements OnInit {
 
   ngOnInit(): void {
     this.loadSavedCredentials();
+    
+    // Rediriger si déjà connecté
+    this.authService.isAuthenticated().subscribe(isAuth => {
+      if (isAuth) {
+        this.router.navigate(['/dashboard']);
+      }
+    });
   }
 
   loadSavedCredentials(): void {
@@ -43,20 +53,33 @@ export class Login implements OnInit {
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.isLoading = true;
+      this.errorMessage = '';
 
-      setTimeout(() => {
-        const formValue = this.loginForm.value;
-        
-        if (formValue.remember) {
-          localStorage.setItem('rememberedEmail', formValue.email);
-        } else {
-          localStorage.removeItem('rememberedEmail');
+      const loginData: LoginRequest = {
+        email: this.loginForm.value.email.toLowerCase(),
+        password: this.loginForm.value.password
+      };
+
+      this.authService.login(loginData).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          
+          // Gestion du "Se souvenir de moi"
+          if (this.loginForm.value.remember) {
+            localStorage.setItem('rememberedEmail', loginData.email);
+          } else {
+            localStorage.removeItem('rememberedEmail');
+          }
+
+          console.log('Connexion réussie:', response);
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = 'Email ou mot de passe incorrect';
+          console.error('Erreur de connexion:', error);
         }
-
-        console.log('Tentative de connexion:', formValue);
-        this.isLoading = false;
-        this.router.navigate(['/dashboard']);
-      }, 1500);
+      });
     } else {
       this.markFormGroupTouched();
     }
@@ -74,10 +97,12 @@ export class Login implements OnInit {
 
   loginWithGoogle(): void {
     console.log('Connexion avec Google');
+    // Implémentation future
   }
 
   loginWithGithub(): void {
     console.log('Connexion avec GitHub');
+    // Implémentation future
   }
 
   get email() { return this.loginForm.get('email'); }
