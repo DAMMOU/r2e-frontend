@@ -61,6 +61,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "local-prod": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local-prod.ts"
+                }
+              ],
+              "optimization": false,           
+              "sourceMap": true,             
+              "namedChunks": true 
             }
           },
           "defaultConfiguration": "production"
@@ -73,6 +84,9 @@
             },
             "development": {
               "buildTarget": "r2e-frontend:build:development"
+            },
+            "local-prod": {
+              "buildTarget": "r2e-frontend:build:local-prod"
             }
           },
           "defaultConfiguration": "development"
